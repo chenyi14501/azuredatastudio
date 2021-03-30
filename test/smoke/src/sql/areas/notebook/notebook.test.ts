@@ -66,12 +66,17 @@ export function setup() {
 			const app = this.app as Application;
 			await app.workbench.sqlNotebook.newUntitledNotebook();
 			// await app.workbench.sqlNotebook.addCellFromPlaceholder('markdown');
+			await app.workbench.sqlNotebook.waitForPlaceholder();
 			await app.workbench.sqlNotebook.addCell('markdown');
 			await app.workbench.sqlNotebook.waitForPlaceholderGone();
 			await app.code.dispatchKeybinding('escape');
-			// await app.workbench.sqlNotebook.waitForDoubleClickToEdit();
-			// await app.workbench.sqlNotebook.doubleClickTextCell();
-			// await app.workbench.sqlNotebook.waitForDoubleClickToEditGone();
+			await app.workbench.sqlNotebook.waitForDoubleClickToEdit();
+			await app.workbench.sqlNotebook.doubleClickTextCell();
+			await app.workbench.sqlNotebook.waitForDoubleClickToEditGone();
+			await app.workbench.sqlNotebook.changeTextCellView('Split View');
+			await app.workbench.sqlNotebook.waitForTypeInEditor('line 1\n\nline 2\n\nline 3');
+			await app.code.dispatchKeybinding('escape');
+			await app.workbench.sqlNotebook.waitForTextCellPreviewContent(3);
 		});
 	});
 }
