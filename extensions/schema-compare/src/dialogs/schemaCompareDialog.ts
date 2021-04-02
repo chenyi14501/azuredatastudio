@@ -466,6 +466,11 @@ export class SchemaCompareDialog {
 			}
 		).component();
 		this.sourceServerDropdown.onValueChanged(async (value) => {
+			const serverDropdownValue = value as string;
+			if (!serverDropdownValue) {
+				return;
+			}
+
 			if (this.sourceServerDropdown.values.findIndex(x => this.matchesValue(x, value as string)) === -1) {
 				await this.sourceDatabaseDropdown.updateProperties({
 					values: [],
@@ -495,6 +500,11 @@ export class SchemaCompareDialog {
 			}
 		).component();
 		this.targetServerDropdown.onValueChanged(async (value) => {
+			const serverDropdownValue = value as string;
+			if (!serverDropdownValue) {
+				return;
+			}
+
 			if (this.targetServerDropdown.values.findIndex(x => this.matchesValue(x, value as string)) === -1) {
 				await this.targetDatabaseDropdown.updateProperties({
 					values: [],
@@ -601,7 +611,12 @@ export class SchemaCompareDialog {
 			}
 		).component();
 		this.sourceDatabaseDropdown.onValueChanged(async (value) => {
-			this.sourceDbEditable = value as string;
+			const databaseDropdownValue = value as string;
+			if (!databaseDropdownValue) {
+				return;
+			}
+
+			this.sourceDbEditable = databaseDropdownValue;
 			this.dialog.okButton.enabled = await this.shouldEnableOkayButton();
 		});
 
@@ -620,7 +635,12 @@ export class SchemaCompareDialog {
 			}
 		).component();
 		this.targetDatabaseDropdown.onValueChanged(async (value) => {
-			this.targetDbEditable = value as string;
+			const databaseDropdownValue = value as string;
+			if (!databaseDropdownValue) {
+				return;
+			}
+
+			this.targetDbEditable = databaseDropdownValue;
 			this.dialog.okButton.enabled = await this.shouldEnableOkayButton();
 		});
 
